@@ -1,0 +1,130 @@
+🗃️ onWhisper SQLite Schema Overview
+1. Guild Settings
+Stores global settings per server (e.g. prefix, whisper toggles, XP config).
+
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS guild_settings (
+    guild_id INTEGER PRIMARY KEY,
+    prefix TEXT DEFAULT '-',
+    whisper_enabled BOOLEAN DEFAULT 1,
+    whisper_staff_role_id INTEGER,
+    whisper_timeout_minutes INTEGER DEFAULT 60,
+    whisper_anonymous_enabled BOOLEAN DEFAULT 0,
+    xp_enabled BOOLEAN DEFAULT 1,
+    xp_rate INTEGER DEFAULT 10,
+    xp_cooldown_seconds INTEGER DEFAULT 60,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+2. Whispers
+Tracks active and past whisper threads.
+
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS whispers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    guild_id INTEGER,
+    user_id INTEGER,
+    thread_id INTEGER,
+    is_closed BOOLEAN DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    closed_at TIMESTAMP
+);
+3. XP System
+Tracks user XP and leveling.
+
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS user_xp (
+    guild_id INTEGER,
+    user_id INTEGER,
+    xp INTEGER DEFAULT 0,
+    level INTEGER DEFAULT 1,
+    last_message_ts TIMESTAMP,
+    PRIMARY KEY (guild_id, user_id)
+);
+
+CREATE TABLE IF NOT EXISTS level_roles (
+    guild_id INTEGER,
+    level INTEGER,
+    role_id INTEGER,
+    PRIMARY KEY (guild_id, level)
+);
+4. Moderation Logs
+Stores warnings, kicks, bans, etc.
+
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS moderation_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    guild_id INTEGER,
+    user_id INTEGER,
+    mod_id INTEGER,
+    action_type TEXT,
+    reason TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP
+);
+5. Logging Channels
+Config for where events are logged.
+
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS logging_channels (
+    guild_id INTEGER PRIMARY KEY,
+    mod_log_channel_id INTEGER,
+    member_log_channel_id INTEGER,
+    server_log_channel_id INTEGER,
+    logging_enabled BOOLEAN DEFAULT 1
+);
+6. Auto Roles & Reaction Roles
+Tracks role automation settings.
+
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS autoroles (
+    guild_id INTEGER,
+    role_id INTEGER,
+    type TEXT CHECK(type IN ('member', 'bot')),
+    PRIMARY KEY (guild_id, role_id)
+);
+
+CREATE TABLE IF NOT EXISTS reaction_roles (
+    guild_id INTEGER,
+    message_id INTEGER,
+    emoji TEXT,
+    role_id INTEGER,
+    PRIMARY KEY (guild_id, message_id, emoji)
+);
+7. Color Roles
+(Optional: For self-assignable colored roles)
+
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS color_roles (
+    guild_id INTEGER,
+    role_id INTEGER,
+    hex_color TEXT,
+    PRIMARY KEY (guild_id, role_id)
+);
+8. Command Logs (Optional but Useful)
+Tracks command usage for debugging or stats.
+
+sql
+Copy
+Edit
+CREATE TABLE IF NOT EXISTS command_logs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    guild_id INTEGER,
+    user_id INTEGER,
+    command TEXT,
+    used_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
