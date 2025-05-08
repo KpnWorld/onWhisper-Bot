@@ -1,0 +1,76 @@
+🤫 onWhisper
+A feature-rich Discord bot built with Pycord, tailored to make your server feel personal, powerful, and organized. From sleek moderation tools to our one-of-a-kind private Whisper System, onWhisper simplifies server management while adding personality.
+
+🌟 Key Features
+🧩 Whisper System (Signature)
+/whisper action:<create|close|delete> – Fully private help/report threads
+
+Threads only visible to user + staff role
+
+Auto-close on inactivity, optional anonymous mode (coming soon)
+
+⚙️ Unified Config System
+/config – One command to manage:
+
+Prefix for hybrid commands
+
+Whisper settings (toggle, staff role, timeout)
+
+Leveling XP rate, cooldown, toggle
+
+Logging toggles and channel setup
+
+🎮 Leveling System
+/leveling action:<xp|dashboard> – Check XP or view leaderboard
+
+Server XP roles and progression
+
+Configurable gain rate and cooldown
+
+🎭 Role Management
+/roles action:<auto|set|remove|react|color> – All role tools in one
+
+Auto-roles for members or bots
+
+Reaction role bind/unbind
+
+Mass assign/remove roles
+
+Set color roles for aesthetic management
+
+👮 Moderation (Hybrid Commands)
+Commands like -ban, -kick, -warn (prefix) + /ban, /kick, /warn (slash)
+
+Set prefix via /config
+
+Full permission checks, logging, timeouts, purges, etc.
+
+📝 Logging System
+/logging action:<enable|disable> type:<mod|member|server> channel:<#channel>
+
+Toggle and set logging types/channels in one go
+
+🧾 Info + Help System
+/info type:<bot|user|server|role|channel> – One info command, all targets
+
+/help – Fully categorized command list with descriptions
+
+🛠️ Commands Summary
+Group	Command	Description
+Whisper	/whisper	Create/close/delete whispers with options
+Config	/config	Unified setup for bot features and prefix
+Leveling	/leveling	View XP, leaderboard, and XP roles
+Roles	/roles	Mass/manage roles, reactions, auto-roles
+Logging	/logging	Toggle logging and set log channels
+Moderation	-ban, /ban	Full mod toolkit as hybrid commands
+Info	/info	One command for all informational needs
+Help	/help	Categorized command help
+
+🧠 Powered By
+Pycord for all slash and hybrid commands
+
+SQLite for persistent server configs, XP, roles, logging
+
+Threads API for modern private ticketing (Whisper System)
+
+Custom Cog Loader for automatic updates and clean structure
